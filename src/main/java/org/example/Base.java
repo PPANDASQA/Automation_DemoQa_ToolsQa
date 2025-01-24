@@ -1,6 +1,7 @@
 package org.example;
 
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -30,6 +31,7 @@ public class Base {
         System.out.println(op + " window got maximize");
     }
 
+    //Method to get URL
     public void getUrl(String url) {
         try {
             driver.get(url);
@@ -38,6 +40,38 @@ public class Base {
             System.err.println(e.getMessage());
         }
 
+    }
+
+    // Method for Send Keys
+    public void webElementSendKey(WebElement ele, String input, String elementName) {
+        try {
+            ele.sendKeys(input);
+            System.out.println(input + " entered in " + elementName);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    // Method for Click Action
+    public void webElementClick(WebElement ele, String elementName) {
+        try {
+            ele.click();
+            System.out.println(elementName + " clicked");
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    //Method for get Text from element
+    public String getElementText(WebElement ele) {
+        String text = "";
+        try {
+            text = ele.getText();
+            // System.out.println("Text from " + elementName + ": " + text);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+        return text;
     }
 
 
