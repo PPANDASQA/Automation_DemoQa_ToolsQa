@@ -2,7 +2,9 @@ package org.example;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.List;
 
 public class SwageLab {
@@ -15,6 +17,10 @@ public class SwageLab {
         Base baseObj = new Base();
         baseObj.openBrowser(browser);
         baseObj.getUrl(url);
+
+        baseObj.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+
+        WebDriverWait wait = new WebDriverWait(baseObj.driver, Duration.ofSeconds(10));
 
         //Web Element for the UserName
         WebElement userName = baseObj.driver.findElement(By.id("user-name"));
@@ -39,6 +45,8 @@ public class SwageLab {
         //Web element add to cart
         WebElement addToCart = baseObj.driver.findElement(By.xpath("//button[@id = 'add-to-cart']"));
         baseObj.webElementClick(addToCart, "Add to cart");
+
+
 
         //Web element to go to the cart
         WebElement cart = baseObj.driver.findElement(By.xpath("//div[@id = 'shopping_cart_container']"));
