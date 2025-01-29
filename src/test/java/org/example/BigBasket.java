@@ -3,6 +3,10 @@ package org.example;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class BigBasket {
     static String browser = "Chrome";
@@ -13,14 +17,18 @@ public class BigBasket {
         baseObj.openBrowser(browser);
         baseObj.getUrl(url);
 
-        WebElement item = baseObj.driver.findElement(By.xpath("//h3[contains(text(), 'Capsicum')]//following::button[contains(text(), 'Add')][1]"));
+       // baseObj.driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
+        WebDriverWait wait = new WebDriverWait(baseObj.driver, Duration.ofSeconds(10));
 
-         Actions actions = new Actions(baseObj.driver);
-         actions.moveToElement(item).click().perform();
+        WebElement item = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h3[contains(text(), 'Carrot')]//following::button[text()= 'Add'][1]")));
+//         Actions actions = new Actions(baseObj.driver);
+//         actions.moveToElement(item).click().perform();
 
+          baseObj.webElementClick(item,"Add button");
 
-      //  baseObj.webElementClick(item,"Add button");
+        System.out.println(baseObj.driver.getTitle());
+
 
     }
 }
