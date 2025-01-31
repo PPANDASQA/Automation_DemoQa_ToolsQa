@@ -25,7 +25,7 @@ public class DemoQaRun extends BaseDriver {
         driver.navigate().back();
 
         new DemoQaHome().goToAlertFrmWindPage();
-        new DemoQaAlertAndFrame().alertTab();
+        new DemoQaAlertAndFrame().gpTlertTab();
         new DemoQaAlertAndFrame().normalAlert();
         new DemoQaAlertAndFrame().timerAlert();
         new DemoQaAlertAndFrame().confirmAlert();

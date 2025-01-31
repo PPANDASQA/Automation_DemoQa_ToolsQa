@@ -11,6 +11,9 @@ public class DemoQaAlertAndFrame extends Base {
     @FindBy(xpath = "//span[text() = 'Alerts']")
     private WebElement alertsTab;
 
+    @FindBy(xpath = "//span[text() = 'Frames']")
+    private WebElement frameTab;
+
     //All alert button element
     @FindBy(xpath = "//button[@id = 'alertButton']")
     private WebElement alertBtnEle;
@@ -35,7 +38,7 @@ public class DemoQaAlertAndFrame extends Base {
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 30), this);
     }
 
-    public void alertTab() {
+    public void gpTlertTab() {
         new Base().webElementClick(alertsTab, "Alerts button");
     }
 
@@ -63,6 +66,11 @@ public class DemoQaAlertAndFrame extends Base {
         new Base().sendKeysAlert("Priyabrata");
         new Base().acceptAlert();
     }
+public void goToFrameTab(){
+        new Base().webElementClick(frameTab, "Frame tab ");
+}
+public void 
+
 
 
 }
