@@ -6,14 +6,17 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.List;
 
-public class Base {
+public class Base extends BaseDriver {
 
-    public WebDriver driver;
+
     public Actions actions;
+    public WebDriverWait wait;
+    public Alert alert;
 
     //Method for open browser
     public void openBrowser(String browser) {
@@ -35,7 +38,7 @@ public class Base {
         System.out.println("The invoke browser is " + op);
         driver.manage().window().maximize();
         System.out.println(op + " window got maximize");
-        actions = new Actions(driver); //Action class initialize
+
     }
 
     //Method to get URL
@@ -48,6 +51,33 @@ public class Base {
         }
 
     }
+/*
+    //Method to going backward
+    public void navigateBack() {
+        try {
+            driver.navigate().back();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    //Method to going forward
+    public void navigateForward() {
+        try {
+            driver.navigate().forward();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    //Method to Page Refresh
+    public void navigateRefresh() {
+        try {
+            driver.navigate().refresh();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+    } */
 
     // Method for Send Keys
     public void webElementSendKey(WebElement ele, String input, String elementName) {
@@ -63,6 +93,10 @@ public class Base {
     // Method for Click Action
     public void webElementClick(WebElement ele, String elementName) {
         try {
+            scrollToView(ele);
+//            wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+//            wait.until(ExpectedConditions.elementToBeClickable(ele));
+            Thread.sleep(600);
             ele.click();
             System.out.println(elementName + " clicked");
         } catch (Exception e) {
@@ -82,11 +116,34 @@ public class Base {
         return text;
     }
 
+    //Method for get title of the page
+    public String getPageTitle() {
+        String title = "";
+        try {
+            title = driver.getTitle();
+            System.out.println("Page title is " + title);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+        return title;
+    }
+
+    //Method for get URL
+    public String getPageURL() {
+        String URL = "";
+        try {
+            URL = driver.getCurrentUrl();
+            System.out.println("Current URL is " + URL);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+        return URL;
+    }
+
     //method for click operation in dropdown
     public void selectOption(WebElement ele, String method, String value, String elementName) {
         Select select = new Select(ele);
         String type = method.toLowerCase();
-
         try {
             switch (type) {
 
@@ -145,7 +202,7 @@ public class Base {
         }
     }
 
-    //Method for action class contex click
+    //Method for action class context click
     public void actionContextClick(WebElement ele, String elementName) {
         try {
             actions.contextClick(ele).perform();
@@ -155,6 +212,7 @@ public class Base {
         }
     }
 
+    //Method for action class move to element
     public void actionMoveToElement(WebElement ele, String elementName) {
         try {
             actions.moveToElement(ele).perform();
@@ -164,6 +222,7 @@ public class Base {
         }
     }
 
+    //Method for Key down
     public void keyDown(String keyName) {
         try {
             switch (keyName.toLowerCase()) {
@@ -191,6 +250,7 @@ public class Base {
         }
     }
 
+    //Method for Key up
     public void keyUp(String keyName) {
         try {
             switch (keyName.toLowerCase()) {
@@ -218,10 +278,62 @@ public class Base {
         }
     }
 
+    //Method for Scroll
     public void scroll(int xAxis, int yAxis) {
         try {
             JavascriptExecutor jse = (JavascriptExecutor) driver;
             jse.executeScript("windows.scrollTo(" + xAxis + "," + yAxis + ")");
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    //Method for scroll
+    public void scrollToView(WebElement ele) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView({block: 'center'});", ele);
+    }
+
+    //Method for get text from alert
+    public String getAlertText() {
+        try {
+            alert = driver.switchTo().alert();
+            return alert.getText();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            return null;
+        }
+    }
+
+    //Method for accept alert
+    public void acceptAlert() {
+        try {
+            alert = driver.switchTo().alert();
+            Thread.sleep(1000);
+            alert.accept();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    //Method for dismiss alert
+    public void dismissAlert() {
+        try {
+            alert = driver.switchTo().alert();
+            Thread.sleep(1000);
+            alert.dismiss();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    //Method for Send keys to alert
+    public void sendKeysAlert(String input) {
+        try {
+            alert = driver.switchTo().alert();
+            Thread.sleep(500);
+            alert.sendKeys(input);
+            Thread.sleep(3000);
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }
