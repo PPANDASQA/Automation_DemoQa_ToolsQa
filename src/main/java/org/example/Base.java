@@ -6,16 +6,13 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.List;
 
 public class Base extends BaseDriver {
 
-
     public Actions actions;
-    public WebDriverWait wait;
     public Alert alert;
 
     //Method for open browser
@@ -94,9 +91,9 @@ public class Base extends BaseDriver {
     public void webElementClick(WebElement ele, String elementName) {
         try {
             scrollToView(ele);
-//            wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-//            wait.until(ExpectedConditions.elementToBeClickable(ele));
             Thread.sleep(600);
+//            highlightElement(ele);
+//            Thread.sleep(500);
             ele.click();
             System.out.println(elementName + " clicked");
         } catch (Exception e) {
@@ -106,38 +103,39 @@ public class Base extends BaseDriver {
 
     //Method for get Text from element
     public String getElementText(WebElement ele) {
-        String text = "";
         try {
-            text = ele.getText();
             // System.out.println("Text from " + elementName + ": " + text);
+            return ele.getText();
         } catch (Exception e) {
             System.err.println(e.getMessage());
+            return e.getMessage();
         }
-        return text;
+
     }
 
     //Method for get title of the page
     public String getPageTitle() {
-        String title = "";
         try {
-            title = driver.getTitle();
+            String title = driver.getTitle();
             System.out.println("Page title is " + title);
+            return title;
         } catch (Exception e) {
             System.err.println(e.getMessage());
+            return e.getMessage();
         }
-        return title;
     }
 
     //Method for get URL
     public String getPageURL() {
-        String URL = "";
         try {
-            URL = driver.getCurrentUrl();
+            String URL = driver.getCurrentUrl();
             System.out.println("Current URL is " + URL);
+            return URL;
         } catch (Exception e) {
             System.err.println(e.getMessage());
+            return e.getMessage();
         }
-        return URL;
+
     }
 
     //method for click operation in dropdown
@@ -166,7 +164,6 @@ public class Base extends BaseDriver {
     //Method for handel auto suggestion
     public void autoSuggestionHandler(WebElement ele, String inputText, String expectedText, String elementName) {
         webElementSendKey(ele, inputText, elementName);
-        //ele.sendKeys(inputText);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         try {
             List<WebElement> suggestions = driver.findElements(By.xpath("//div[contains(@id, 'react-select')]"));
@@ -301,6 +298,18 @@ public class Base extends BaseDriver {
         js.executeScript("arguments[0].scrollIntoView({block: 'center'});", ele);
     }
 
+    //Method for highlight an element while perform any action
+    public void highlightElement(WebElement element) {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].style.border='3px solid red'", element); // Highlight with a red border
+        try {
+            Thread.sleep(500); // Add a small delay to make the highlight visible
+        } catch (InterruptedException e) {
+            System.err.println(e.getMessage());
+        }
+        js.executeScript("arguments[0].style.border=''", element); // Remove the highlight
+    }
+
     //Method for get text from alert
     public String getAlertText() {
         try {
@@ -412,4 +421,52 @@ public class Base extends BaseDriver {
     }
 
 
+    public boolean isLinkDisplayed(WebElement linkElement, String linkName) {
+        boolean isDisplayed = false;
+        try {
+            isDisplayed = linkElement.isDisplayed();
+            System.out.println("Link '" + linkName + "' is displayed: " + isDisplayed);
+            return isDisplayed;
+        } catch (Exception e) {
+            System.err.println("Failed to check if link is displayed: " + linkName);
+            return isDisplayed;
+        }
+    }
+
+
+
+
+    public String getLinkText(WebElement linkElement, String linkName) {
+        try {
+            String linkText = linkElement.getText();
+            System.out.println("Text of link '" + linkName + "': " + linkText);
+            return linkText;
+        } catch (Exception e) {
+            System.err.println("Failed to get text of link: " + linkName);
+            return e.getMessage();
+        }
+    }
+
+
+    public String getLinkUrl(WebElement linkElement, String linkName) {
+        try {
+            String linkUrl = linkElement.getDomAttribute("href");
+            System.out.println("URL of link '" + linkName + "': " + linkUrl);
+            return linkUrl;
+        } catch (Exception e) {
+            System.err.println("Failed to get URL of link:" );
+            return e.getMessage();
+        }
+    }
+
+    public static String switchToNewWindow(WebDriver driver) {
+        String originalWindow = driver.getWindowHandle();
+        for (String windowHandle : driver.getWindowHandles()) {
+            if (!windowHandle.equals(originalWindow)) {
+                driver.switchTo().window(windowHandle);
+                break;
+            }
+        }
+        return originalWindow;
+    }
 }

@@ -99,8 +99,11 @@ public class DemoQaElements extends BaseDriver {
     private WebElement singleClickBtnEle;
 
     //Links page elements
-    @FindBy(xpath = "//li[@id='item-6']/span[contains(text(), 'Links')]")
-    private WebElement LinksTab;
+    @FindBy(xpath = "//li[@id='item-5']/span[contains(text(), 'Links')]")
+    private WebElement linksTab;
+
+    @FindBy(xpath = "//a[@id = 'simpleLink']")
+    private WebElement simpleLinkEle;
 
     public DemoQaElements() {
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 30), this);
@@ -149,6 +152,15 @@ public class DemoQaElements extends BaseDriver {
         new Base().actionDoubleClick(doubleClickBtnEle, "Double Click button");
         new Base().actionContextClick(rightClickBtnEle, "Right click button ");
         new Base().webElementClick(singleClickBtnEle, "Single click");
+    }
+
+    public void linksTest(){
+        new Base().webElementClick(linksTab,"Links ");
+        Base.switchToNewWindow(driver);
+        System.out.println(new Base().getLinkText(simpleLinkEle, "Home"));
+        System.out.println(new Base().getLinkUrl(simpleLinkEle,"Home"));
+        System.out.println(new Base().isLinkDisplayed(simpleLinkEle,"Home"));
+
     }
 
 }

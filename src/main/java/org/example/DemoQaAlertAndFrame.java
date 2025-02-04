@@ -6,7 +6,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 
 
-public class DemoQaAlertAndFrame extends Base {
+public class DemoQaAlertAndFrame extends BaseDriver {
 
     @FindBy(xpath = "//span[text() = 'Alerts']")
     private WebElement alertsTab;

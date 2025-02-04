@@ -26,6 +26,7 @@ public class DemoQaRun extends BaseDriver {
         driver.navigate().back();
         driver.navigate().back();
 
+
         //Calling method to automate of Alerts page
         new DemoQaHome().goToAlertFrmWindPage();
         new DemoQaAlertAndFrame().goToAlertTab();
@@ -57,6 +58,7 @@ public class DemoQaRun extends BaseDriver {
         new DemoQaElements().checkRadioBtn();
         new DemoQaElements().webTablesTest();
         new DemoQaElements().buttonsTest();
+        new DemoQaElements().linksTest();
 
 
     }
