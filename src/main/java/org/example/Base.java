@@ -185,6 +185,8 @@ public class Base extends BaseDriver {
     //Method for action class click
     public void actionClick(WebElement ele, String elementName) {
         try {
+            actions = new Actions(driver);
+            scrollToView(ele);
             actions.click(ele).perform();
             System.out.println("Action click performed in " + elementName);
         } catch (Exception e) {
@@ -195,6 +197,8 @@ public class Base extends BaseDriver {
     //Method for action class double click
     public void actionDoubleClick(WebElement ele, String elementName) {
         try {
+            actions = new Actions(driver);
+            scrollToView(ele);
             actions.doubleClick(ele).perform();
             System.out.println("Action Double click performed in " + elementName);
         } catch (Exception e) {
@@ -205,6 +209,8 @@ public class Base extends BaseDriver {
     //Method for action class context click
     public void actionContextClick(WebElement ele, String elementName) {
         try {
+            actions = new Actions(driver);
+            scrollToView(ele);
             actions.contextClick(ele).perform();
             System.out.println("Action click performed in " + elementName);
         } catch (Exception e) {
@@ -215,6 +221,7 @@ public class Base extends BaseDriver {
     //Method for action class move to element
     public void actionMoveToElement(WebElement ele, String elementName) {
         try {
+            actions = new Actions(driver);
             actions.moveToElement(ele).perform();
             System.out.println("Action click performed in " + elementName);
         } catch (Exception e) {
@@ -336,6 +343,71 @@ public class Base extends BaseDriver {
             Thread.sleep(3000);
         } catch (Exception e) {
             System.err.println(e.getMessage());
+        }
+    }
+
+    // Method for Frame switching Using Frame element
+    public void switchToFrame(WebElement frameElement) {
+        try {
+            driver.switchTo().frame(frameElement);
+            System.out.println("Switched to frame: " + frameElement.toString());
+        } catch (Exception e) {
+            System.err.println("Failed to switch to frame: " + e.getMessage());
+        }
+    }
+
+    //Method for frame switching using Name or I'd
+    public void switchToFrame(String nameOrId) {
+        try {
+            driver.switchTo().frame(nameOrId);
+            System.out.println("Switched to frame with name or ID: " + nameOrId);
+        } catch (Exception e) {
+            System.err.println("Failed to switch to frame: " + e.getMessage());
+        }
+    }
+
+    //Method for switching frame using index number
+    public void switchToFrame(int index) {
+        try {
+            driver.switchTo().frame(index);
+            System.out.println("Switched to frame with index: " + index);
+        } catch (Exception e) {
+            System.err.println("Failed to switch to frame: " + e.getMessage());
+        }
+    }
+
+    //Methods for switch for default container
+    public void switchToDefaultContent() {
+        try {
+            driver.switchTo().defaultContent();
+            System.out.println("Switched back to default content");
+        } catch (Exception e) {
+            System.err.println("Failed to switch to default content: " + e.getMessage());
+        }
+    }
+
+    //Methods for switch to parent frame
+    public void switchToParentFrame() {
+        try {
+            driver.switchTo().parentFrame();
+            System.out.println("Switched to parent frame");
+        } catch (Exception e) {
+            System.err.println("Failed to switch to parent frame: " + e.getMessage());
+        }
+    }
+
+    //Method to handel nested frames
+    public void handleNestedFrames(WebElement parentFrameElement, WebElement childFrameElement) {
+        try {
+            // Switch to the parent frame
+            switchToFrame(parentFrameElement);
+            System.out.println("Switched to parent frame");
+
+            // Switch to the child frame
+            switchToFrame(childFrameElement);
+            System.out.println("Switched to child frame");
+        } catch (Exception e) {
+            System.err.println("Failed to handle nested frames: " + e.getMessage());
         }
     }
 

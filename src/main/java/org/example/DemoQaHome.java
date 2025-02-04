@@ -23,27 +23,30 @@ public class DemoQaHome extends BaseDriver {
     private WebElement interactionEle;
 
     @FindBy(xpath = "//div[@class = 'card mt-4 top-card'][6]")
-    private  WebElement bookStoreAppEle;
+    private WebElement bookStoreAppEle;
 
 
     public DemoQaHome() {
         PageFactory.initElements(new AjaxElementLocatorFactory(driver, 30), this);
     }
 
-public void goToElementsPage(){
+    public void goToElementsPage() {
         new Base().webElementClick(elementsEle, "Elements");
-}
+    }
 
-public void goToFormPage(){
+    public void goToFormPage() {
         new Base().webElementClick(formsEle, "Forms");
-}
-public void goToAlertFrmWindPage(){
+    }
+
+    public void goToAlertFrmWindPage() {
         new Base().webElementClick(alertFrmWindEle, "Alert, Frame & Windows");
-}
-public void goToInteractionsPage(){
+    }
+
+    public void goToInteractionsPage() {
         new Base().webElementClick(interactionEle, "Interactions ");
-}
-public void goToBookStoreAppPage(){
+    }
+
+    public void goToBookStoreAppPage() {
         new Base().webElementClick(bookStoreAppEle, "Book store application ");
-}
+    }
 }
